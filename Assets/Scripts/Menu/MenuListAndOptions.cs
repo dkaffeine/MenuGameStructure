@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,13 +21,7 @@ public class MenuListAndOptions : MonoBehaviour
         optionMenu.SetActive(false);
 
         // Load and change fonz size
-        FontSize = 20;
-        Debug.Log("Set font size to " + FontSize);
-        ButtonTextChangeSize();
-        TextChangeSize();
-        FontSizeSliderChange();
-        DarkMode = true;
-        darkModeToggle.SetDarkMode();
+        LoadAndApplyData();
     }
 
     // Change all text fonts
@@ -54,4 +47,38 @@ public class MenuListAndOptions : MonoBehaviour
         fontSizeSlider.value = FontSize;
     }
 
+    // Save to disk
+    public void SaveData()
+    {
+        Save data = CreateSaveGameObject();
+        Options.SaveToDisk(data);
+    }
+
+    // Create save game object
+    private Save CreateSaveGameObject()
+    {
+        Save data = new Save();
+        data.fontSize = FontSize;
+        data.darkMode = DarkMode;
+        return data;
+    }
+
+    // Load from disk
+    public void LoadAndApplyData()
+    {
+        Save data = Options.LoadFromDisk();
+        ApplyData(data);
+    }
+
+    // Apply data loaded
+    private void ApplyData(Save data)
+    {
+        FontSize = data.fontSize;
+        Debug.Log("Set font size to " + FontSize);
+        ButtonTextChangeSize();
+        TextChangeSize();
+        FontSizeSliderChange();
+        DarkMode = data.darkMode;
+        darkModeToggle.SetDarkMode();
+    }
 }

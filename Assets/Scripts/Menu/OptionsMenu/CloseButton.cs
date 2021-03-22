@@ -21,5 +21,6 @@ public class CloseButton : MonoBehaviour
         Debug.Log("Close button is clicked");
         menuListAndOptions.mainMenu.SetActive(true);
         menuListAndOptions.optionMenu.SetActive(false);
+        menuListAndOptions.SaveData();
     }
 }
